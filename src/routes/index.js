@@ -1,8 +1,9 @@
-const express=require("express");
-const userRoutes=require("./user.route");
+const express = require("express");
+const categoryRoutes = require("./category.route");
+const bookRoutes = require("./book.router");
+const router = express.Router();
 
-const route=express.Router();
-Router.use("/user",userRoutes);
+router.use("/category", categoryRoutes);
+router.use("/book", bookRoutes);
 
-module.exports=Router;
-
+module.exports = router;

@@ -1,3 +1,2 @@
-module.exports.userService=require("./email.service");
-module.exports.userService=require("./token.service");
-module.exports.userService=require("./user.service");
+module.exports.categoryService = require("./category.services");
+module.exports.bookService = require("./book.services");

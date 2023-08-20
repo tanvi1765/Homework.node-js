@@ -1,31 +1,27 @@
-const express=require("express");
-const http=require("http");
-const { connectDB } = require("./db/dbconnect");
+const express = require("express");
+const http = require("http");
+const { connectDB } = require("./db/db.connection");
+const routes = require("./routes");
 const config = require("./config/config");
+const bodyParser = require("body-parser");
 
-const app =express()
+const app = express();
 
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// var  http= require("http");
-// var fs =require("fs");
-// const app = express();
-// var express = require("express");
+app.use(bodyParser.json());
 
-// // http using server
-// http.createServer(function(req,res){
-//     fs.readFile("test.html",function(err , data){
-//         res.writeHead(200,{"content-type":"text/html"});
-//         res.write(data);
-//         return res.end();
-//     });
-// }).listen(8180);
+app.use("/v1", routes);
 
-// // express using server
-// app.get('/',function(req,res){
-//     fs.readFile("test.html",function(err , data){
-//         res.writeHead(200,{"content-type":"text/html"});
-//         res.write(data);
-//         return res.end();
-//     });
-// })
-// app.listen(3000);
+app.use((req, res, next) => {
+    next(new Error("Route not found!"));
+});
+
+/** Database connection */
+connectDB()
+
+const server = http.createServer(app);
+
+server.listen(config.port, () => {
+    console.log("server is started");
+});
